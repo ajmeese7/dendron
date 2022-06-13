@@ -94,6 +94,12 @@
       "type": "shell",
       "command": "node --inspect ${workspaceFolder}/lib/bin/dendron-cli exportPodV2 --inlineConfig Key=exportScope,Value=Note --vault vault --fname dendron.alternatives --podId testing-gdoc --wsRoot ${workspaceFolder}/../../test-workspace ",
       "problemMatcher": []
+    },
+    {
+      "label": "visualize",
+      "type": "shell",
+      "command": "node --inspect ${workspaceFolder}/lib/bin/dendron-cli visualize --wsRoot ${workspaceFolder}/../../docs",
+      "problemMatcher": []
     }
   ]
 }
