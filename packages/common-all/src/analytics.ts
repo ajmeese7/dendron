@@ -172,7 +172,6 @@ export enum GraphEvents {
   GraphThemeChanged = "GraphThemeChanged",
   GraphViewUsed = "GraphViewUsed",
   GraphPanelUsed = "GraphPanelUsed",
-  GraphDepthChanged = "GraphDepthChanged",
 }
 
 export enum TreeViewEvents {
