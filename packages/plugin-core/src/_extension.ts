@@ -8,6 +8,7 @@ import {
   ConfigUtils,
   CONSTANTS,
   CURRENT_AB_TESTS,
+  CURRENT_TUTORIAL_TEST,
   DendronError,
   getStage,
   GitEvents,
@@ -92,6 +93,7 @@ import { DendronExtension, getDWorkspace, getExtension } from "./workspace";
 import { WorkspaceActivator } from "./workspace/workspaceActivater";
 import { WorkspaceInitFactory } from "./workspace/WorkspaceInitFactory";
 import { WSUtils } from "./WSUtils";
+import setupRecentWorkspacesTreeView from "./features/RecentWorkspacesTreeview";
 
 const MARKDOWN_WORD_PATTERN = new RegExp("([\\w\\.\\#]+)");
 // === Main
@@ -699,10 +701,10 @@ export async function _activate(
       extensionInstallStatus,
     });
 
-    // Setup the help and feedback view here so that it still works even if
+    // Setup the help and feedback and recent workspaces views here so that it still works even if
     // we're not in a Dendron workspace.
-    const helpAndFeedbackView = setupHelpFeedbackTreeView();
-    context.subscriptions.push(helpAndFeedbackView);
+    context.subscriptions.push(setupHelpFeedbackTreeView());
+    context.subscriptions.push(setupRecentWorkspacesTreeView());
 
     if (await DendronExtension.isDendronWorkspace()) {
       const activator = new WorkspaceActivator();
@@ -935,6 +937,11 @@ export async function _activate(
         showcase.showToast();
       }, ONE_MINUTE_IN_MS);
 
+      // Add the current workspace to the recent workspace list.
+      MetadataService.instance().addToRecentWorkspaces(
+        DendronExtension.workspaceFile().fsPath
+      );
+
       Logger.info({ ctx, msg: "fin startClient", durationReloadWorkspace });
     } else {
       // ws not active
@@ -1022,10 +1029,19 @@ async function showWelcomeOrWhatsNew({
             : "secondary install on new vscode instance"
         }`,
       });
+
+      // Explicitly set the tutorial split test group in the Install event as
+      // well, since Amplitude may not have the user props splitTest setup in time
+      // before this install event reaches their backend.
+      const group = CURRENT_TUTORIAL_TEST.getUserGroup(
+        SegmentClient.instance().anonymousId
+      );
+
       // track how long install process took ^e8itkyfj2rn3
       AnalyticsUtils.track(VSCodeEvents.Install, {
         duration: getDurationMilliseconds(start),
         isSecondaryInstall,
+        tutorialGroup: group,
       });
 
       metadataService.setGlobalVersion(version);
