@@ -28,6 +28,7 @@ export enum VSCodeEvents {
   FeatureShowcaseResponded = "FeatureShowcaseResponded",
   HelpAndFeedbackItemClicked = "HelpAndFeedbackItemClicked",
   BacklinksPanelUsed = "BacklinksPanelUsed",
+  NoteTraitsInitialized = "NoteTraitsInitialized",
 }
 
 export enum CLIEvents {
