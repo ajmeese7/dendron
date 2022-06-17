@@ -423,6 +423,10 @@
         "title": "Dendron: Sign In"
       },
       {
+        "command": "dendron.showVisualization",
+        "title": "Dendron: Show Visualization"
+      },
+      {
         "command": "dendron.enableTelemetry",
         "title": "Dendron: Enable Telemetry"
       },

@@ -61,6 +61,7 @@ import { SchemaLookupCommand } from "./SchemaLookupCommand";
 import { SetupWorkspaceCommand } from "./SetupWorkspace";
 import { ShowHelpCommand } from "./ShowHelp";
 import { ShowLegacyPreviewCommand } from "./ShowLegacyPreview";
+import { ShowVisualizationCommand } from "./ShowVisualization";
 import { SignInCommand } from "./SignIn";
 import { SignUpCommand } from "./SignUp";
 import { SnapshotVaultCommand } from "./SnapshotVault";
@@ -145,6 +146,7 @@ const ALL_COMMANDS = [
   SetupWorkspaceCommand,
   ShowHelpCommand,
   ShowLegacyPreviewCommand,
+  ShowVisualizationCommand,
   SignInCommand,
   SignUpCommand,
   PublishExportCommand,
